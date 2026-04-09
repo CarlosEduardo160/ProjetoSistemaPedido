@@ -12,22 +12,21 @@ public class PedidoRepositorio {
     private int contadorId = 1;
     private ArrayList<Pedido> pedidos = new ArrayList<>();
 
-    public void cadastrarPedido(Cliente cliente, Produto produto){
+    public void criarPedido(Cliente cliente, Produto produto){
         Pedido novoPedido = new Pedido(contadorId, cliente, produto);
         pedidos.add(novoPedido);
         contadorId++;
     }
 
-    public void exibirPedidos(){
+    public void listarPedidos(){
         if(pedidos.isEmpty()){
             System.out.println("Nenhum pedido registrado.");
         } else {
             for(Pedido pedido : pedidos){
                 System.out.println("=============");
-                System.out.println("Pedido:");
+                System.out.println("Pedido: ");
                 System.out.println("Comprador: " + cliente.getNome() + " - " + cliente.getCpf());
-                System.out.println("Id: " + produto.getId());
-                System.out.println("Produto: " + produto.getNome());
+                System.out.println("ID: " + produto.getId() + " | Produto: " + produto.getNome());
                 System.out.println("R$: " + produto.getPreco());
                 System.out.println("=============");
             }

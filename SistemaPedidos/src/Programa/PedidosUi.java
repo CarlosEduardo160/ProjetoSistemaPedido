@@ -9,23 +9,64 @@ public class PedidosUi {
         boolean rodando = true;
 
         while(rodando){
-            menu();
+            menuPrincipal();
 
         }
     }
 
-    private void menu(){
-        String menu = """
+    private void menuPrincipal(){
+        String menuPrincipal = """
                 ==============Sistema de Pedidos==============
-                [1] - Cadastrar Cliente
-                [2] - Cadastrar Produto
-                [3] - Fazer pedido
-                [4] - Exibir pedidos
-                [5] - Encerrar programa
+                [1] - Clientes
+                [2] - Produtos
+                [3] - Pedidos       
+                [0] - Sair
                 ==============================================
                 
                 Escolha uma opção: 
                 """;
-        System.out.println(menu);
+        System.out.println(menuPrincipal);
+    }
+
+    private void menuClientes(){
+        String menuCliente = """
+                ==============Clientes==============
+                [1] - Cadastrar cliente
+                [2] - Listar clientes
+                [3] - Buscar cliente  
+                [0] - Voltar
+                ==============================================
+                
+                Escolha uma opção: 
+                """;
+        System.out.println(menuCliente);
+    }
+
+    private void menuProdutos(){
+        String menuProdutos = """
+                ==============Produtos==============
+                [1] - Adicionar produto
+                [2] - Listar produtos
+                [3] - Buscar produto
+                [0] - Voltar
+                ==============================================
+                
+                Escolha uma opção: 
+                """;
+        System.out.println(menuProdutos);
+    }
+
+    private void menuPedidos(){
+        String menuPedidos = """
+                ==============Pedidos==============
+                [1] - Criar pedido
+                [2] - Listar pedidos
+                [3] - Buscar pedidos   
+                [0] - Voltar
+                ==============================================
+                
+                Escolha uma opção: 
+                """;
+        System.out.println(menuPedidos);
     }
 }

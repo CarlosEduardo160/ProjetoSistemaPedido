@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.ArrayList;
-
 public class Pedido {
     private int idPedido;
     Cliente cliente;
@@ -18,6 +16,10 @@ public class Pedido {
         if(status == StatusPedido.PENDENTE){
             status = StatusPedido.PAGO;
         }
+    }
+
+    public int getIdPedido() {
+        return idPedido;
     }
 
     public void imprimirResumo(){
