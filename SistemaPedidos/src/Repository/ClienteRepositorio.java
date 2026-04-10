@@ -7,8 +7,7 @@ import java.util.ArrayList;
 public class ClienteRepositorio {
     private ArrayList<Cliente> clientes = new ArrayList<>();
 
-    public void cadastrarCliente(String nome, String cpf){
-        Cliente cliente = new Cliente(nome, cpf);
+    public void cadastrarCliente(Cliente cliente){
         clientes.add(cliente);
     }
 
@@ -22,14 +21,12 @@ public class ClienteRepositorio {
         }
     }
 
-    public void buscarCliente() {
-        if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente cadastrado.");
-        } else {
-            System.out.println("Digite o CPF do cliente: ");
-            for(Cliente cliente : clientes){
-                System.out.println("Nome: " + cliente.getNome() + "| Cpf: " + cliente.getCpf() );
+    public Cliente buscarCliente(String termo) {
+        for(Cliente cliente : clientes){
+            if(cliente.getCpf().equals(termo));{
+                return cliente;
             }
         }
+        return null;
     }
 }

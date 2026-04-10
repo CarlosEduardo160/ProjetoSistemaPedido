@@ -1,9 +1,20 @@
 package Programa;
 
+import Model.Cliente;
+import Model.Produto;
+import Repository.ClienteRepositorio;
 import Repository.PedidoRepositorio;
+import Repository.ProdutoRepositorio;
+
+import java.util.Scanner;
 
 public class PedidosUi {
     private PedidoRepositorio pedidoRepositorio;
+    private ClienteRepositorio clienteRepositorio;
+    private ProdutoRepositorio produtoRepositorio;
+    Scanner entrada = new Scanner(System.in);
+    Scanner entradaTexto = new Scanner(System.in);
+    Scanner entradaNumero = new Scanner(System.in);
 
     private void iniciar(){
         boolean rodando = true;
@@ -68,5 +79,16 @@ public class PedidosUi {
                 Escolha uma opção: 
                 """;
         System.out.println(menuPedidos);
+    }
+
+    public void cadastarCliente(){
+        System.out.print("Digite o nome do cliente: ");
+        String nome = entradaTexto.nextLine();
+
+        System.out.print("Digite o CPF do cliente: ");
+        String cpf = entrada.nextLine();
+
+        Cliente novoCliente = new Cliente(nome, cpf);
+        clienteRepositorio.cadastrarCliente(novoCliente);
     }
 }

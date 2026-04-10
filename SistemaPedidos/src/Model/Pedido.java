@@ -18,6 +18,18 @@ public class Pedido {
         }
     }
 
+    public void enviar(){
+        if(status == StatusPedido.PAGO){
+            status = StatusPedido.ENVIADO;
+        }
+    }
+
+    public void cancelar(){
+        if(status == StatusPedido.PENDENTE){
+            status = StatusPedido.CANCELADO;
+        }
+    }
+
     public int getIdPedido() {
         return idPedido;
     }

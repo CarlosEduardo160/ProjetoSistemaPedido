@@ -33,5 +33,12 @@ public class PedidoRepositorio {
         }
     }
 
-
+    public Pedido buscarPedido(int id){
+        for(Pedido pedido : pedidos){
+            if(pedido.getIdPedido() == id){
+                return pedido;
+            }
+        }
+        return null;
+    }
 }
