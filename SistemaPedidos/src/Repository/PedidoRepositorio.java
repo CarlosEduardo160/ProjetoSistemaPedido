@@ -20,7 +20,7 @@ public class PedidoRepositorio {
 
     public void listarPedidos(){
         if(pedidos.isEmpty()){
-            System.out.println("Nenhum pedido registrado.");
+            System.out.println("-> Nenhum pedido registrado.");
         } else {
             for(Pedido pedido : pedidos){
                 System.out.println("=============");
@@ -35,7 +35,7 @@ public class PedidoRepositorio {
 
     public Pedido buscarPedido(int id){
         for(Pedido pedido : pedidos){
-            if(pedido.getIdPedido() == id){
+            if(pedido.getIdPedido() == contadorId){
                 return pedido;
             }
         }

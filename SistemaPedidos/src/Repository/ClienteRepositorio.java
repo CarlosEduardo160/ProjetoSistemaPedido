@@ -13,17 +13,18 @@ public class ClienteRepositorio {
 
     public void listarClientes() {
         if (clientes.isEmpty()) {
-            System.out.println("Nenhum cliente cadastrado.");
+            System.out.println("-> Nenhum cliente cadastrado.");
         } else {
             for(Cliente cliente : clientes){
-                System.out.println("Nome: " + cliente.getNome() + "| Cpf: " + cliente.getCpf() );
+                System.out.println("Nome: " + cliente.getNome() + "| Cpf: " + cliente.getCpf());
             }
         }
     }
 
-    public Cliente buscarCliente(String termo) {
+
+    public Cliente buscarCliente(String cpf) {
         for(Cliente cliente : clientes){
-            if(cliente.getCpf().equals(termo));{
+            if(cliente.getCpf().equals(cpf));{
                 return cliente;
             }
         }
