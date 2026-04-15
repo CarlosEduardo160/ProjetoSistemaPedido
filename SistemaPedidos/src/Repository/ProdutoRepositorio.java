@@ -5,23 +5,17 @@ import Model.Produto;
 import java.util.ArrayList;
 
 public class ProdutoRepositorio {
-    int contadorId = 1;
+    private int contadorId = 1;
     private ArrayList<Produto> estoque = new ArrayList<>();
 
-    public void criarProduto(String nome, double preco) {;
-        Produto produto = new Produto(contadorId, nome, preco);
+    public void criarProduto(Produto produto) {
+        produto.setId(contadorId);
         estoque.add(produto);
         contadorId++;
     }
 
-    public void listarProdutos() {
-        if (estoque.isEmpty()) {
-            System.out.println("-> Nenhum produto no estoque.");
-        } else {
-            for (Produto produto : estoque) {
-                System.out.println(produto);
-            }
-        }
+    public ArrayList<Produto> listarProdutos() {
+        return estoque;
     }
 
     public Produto buscarProduto(int id) {

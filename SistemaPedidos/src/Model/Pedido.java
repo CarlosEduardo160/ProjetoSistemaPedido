@@ -12,31 +12,46 @@ public class Pedido {
         this.produto = produto;
     }
 
-    public void pagar(){
+    public boolean pagar(){
         if(status == StatusPedido.PENDENTE){
             status = StatusPedido.PAGO;
+            return true;
         }
+        return false;
     }
 
-    public void enviar(){
+    public boolean enviar(){
         if(status == StatusPedido.PAGO){
             status = StatusPedido.ENVIADO;
+            return true;
         }
+        return false;
     }
 
-    public void cancelar(){
+    public boolean cancelar(){
         if(status == StatusPedido.PENDENTE){
             status = StatusPedido.CANCELADO;
+            return true;
         }
+        return false;
     }
 
     public int getIdPedido() {
         return idPedido;
     }
 
-    public void imprimirResumo(){
-        System.out.println("Pedido: " + produto.getNome());
-        System.out.println("Cliente: " + cliente.getNome());
-        System.out.println("Status: " + status);
+    public StatusPedido getStatus() {
+        return status;
+    }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "-----PEDIDO #%d-----%n" +
+                        "Comprador| %s%n" +
+                        "Produto| %s%n" +
+                        "Status: %s%n" +
+                        "----------", idPedido, cliente, produto, status
+        );
     }
 }

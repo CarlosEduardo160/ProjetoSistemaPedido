@@ -1,10 +1,13 @@
 package Programa;
 
 import Model.Cliente;
+import Model.Pedido;
 import Model.Produto;
 import Repository.ClienteRepositorio;
 import Repository.PedidoRepositorio;
 import Repository.ProdutoRepositorio;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PedidosUi {
@@ -36,8 +39,7 @@ public class PedidosUi {
 
                         switch (opcaoCliente) {
                             case 1:
-                                cadastarCliente();
-                                System.out.println("--Cliente cadastrado com sucesso!");
+                                cadastrarCliente();
                                 break;
 
                             case 2:
@@ -49,27 +51,82 @@ public class PedidosUi {
                                 break;
 
                             case 0:
-                                System.out.println("Voltando...");
+                                System.out.println("--Voltando...");
                                 break;
 
                             default:
-                                System.out.println("Opção inválida.");
+                                System.out.println("--Opção inválida.");
                         }
                     } while (opcaoCliente != 0);
+                    break;
 
                 case 2: {
-                    menuProdutos();
+                    int opcaoProduto;
+                    do {
+                        menuProdutos();
+                        opcaoProduto = entradaNumero.nextInt();
+                        switch (opcaoProduto){
+                            case 1:
+                                adicionarProduto();
+                                break;
+
+                            case 2:
+                                listarProdutos();
+                                break;
+
+                            case 3:
+                                buscarProdutos();
+                                break;
+
+                            case 0:
+                                System.out.println("--Voltando...");
+                                break;
+
+                            default:
+                                System.out.println("--Opção inválida.");
+                        }
+                    } while(opcaoProduto != 0);
                     break;
                 }
                 case 3: {
-                    menuPedidos();
+                    int opcaoPedido;
+                    do{
+                        menuPedidos();
+                        opcaoPedido = entradaNumero.nextInt();
+                        switch (opcaoPedido){
+                            case 1:
+                                criarPedido();
+                                break;
+
+                            case 2:
+                                listarPedidos();
+                                break;
+
+                            case 3:
+                                buscarPedido();
+                                break;
+
+                            case 4:
+                                atualizarStatus();
+                                break;
+
+                            case 0:
+                                System.out.println("--Voltando...");
+                                break;
+
+                            default:
+                                System.out.println("--Opção inválida.");
+                        }
+                    } while (opcaoPedido != 0);
                     break;
                 }
                 case 0: {
+                    System.out.println("--Encerrando.");
                     rodando = false;
+                    break;
                 }
                 default:
-                    System.out.println("Opção inválida.");
+                    System.out.println("--Opção inválida.");
             }
         }
     }
@@ -81,10 +138,10 @@ public class PedidosUi {
                 [1] - Clientes
                 [2] - Produtos
                 [3] - Pedidos
-                [0] - Sair
+                [0] - Encerrar sistema
                 ==============================================
                 
-                Escolha uma opção: 
+                Escolha uma opção:
                 """;
         System.out.print(menuPrincipal);
     }
@@ -100,7 +157,7 @@ public class PedidosUi {
                 
                 Escolha uma opção: 
                 """;
-        System.out.println(menuCliente);
+        System.out.print(menuCliente);
     }
 
     private void menuProdutos(){
@@ -114,7 +171,7 @@ public class PedidosUi {
                 
                 Escolha uma opção: 
                 """;
-        System.out.println(menuProdutos);
+        System.out.print(menuProdutos);
     }
 
     private void menuPedidos(){
@@ -123,17 +180,32 @@ public class PedidosUi {
                 [1] - Criar pedido
                 [2] - Listar pedidos
                 [3] - Buscar pedidos
+                [4] - Atualizar Status
                 [0] - Voltar
                 ==============================================
                 
                 Escolha uma opção: 
                 """;
-        System.out.println(menuPedidos);
+        System.out.print(menuPedidos);
+    }
+
+    private void menuAtualizarStatus(){
+        String meunuAtualizarStatus = """
+               ==============Status==============
+                [1] - Pagar
+                [2] - Enviar
+                [3] - Cancelar
+                [0] - Voltar
+                ==============================================
+                
+                Escolha uma opção:
+               """;
+        System.out.print(meunuAtualizarStatus);
     }
 
     //-----------Clientes-----------
 
-    public void cadastarCliente(){
+    public void cadastrarCliente(){
         System.out.print("Digite o nome do cliente: ");
         String nome = entradaTexto.nextLine();
 
@@ -142,11 +214,20 @@ public class PedidosUi {
 
         Cliente novoCliente = new Cliente(nome, cpf);
         clienteRepositorio.cadastrarCliente(novoCliente);
+
+        System.out.println("--Cliente cadastrado com sucesso!");
     }
 
     public void listarClientes(){
-        System.out.println("Lista de clientes:");
-        clienteRepositorio.listarClientes();
+        ArrayList<Cliente> clientes = clienteRepositorio.listarClientes();
+
+        if(clientes.isEmpty()){
+            System.out.println("--Nenhum cliente cadastrado.");
+        } else {
+            for(Cliente cliente : clientes){
+                System.out.println(cliente);
+            }
+        }
     }
 
     public void buscarCliente(){
@@ -155,10 +236,10 @@ public class PedidosUi {
 
         Cliente clienteEncontrado = clienteRepositorio.buscarCliente(cpf);
 
-        if(clienteEncontrado == null){
-            System.out.println("--Cliente não encontrado ou registrado.");
-        } else {
+        if(clienteEncontrado != null){
             System.out.println(clienteEncontrado);
+        } else {
+            System.out.println("--Cliente não encontrado ou registrado.");
         }
     }
 
@@ -171,19 +252,34 @@ public class PedidosUi {
         System.out.print("Preço: ");
         float preco = entradaNumero.nextFloat();
 
-        produtoRepositorio.criarProduto(nome, preco);
+        Produto novoProduto = new Produto(nome, preco);
+        produtoRepositorio.criarProduto(novoProduto);
+        System.out.println("--Produto cadastrado com sucesso!");
     }
 
     public void listarProdutos(){
-        System.out.println("Lista de clientes:");
-        produtoRepositorio.listarProdutos();
+        ArrayList<Produto> estoque = produtoRepositorio.listarProdutos();
+
+        if (estoque.isEmpty()) {
+            System.out.println("--Nenhum produto no estoque.");
+        } else {
+            for (Produto produto : estoque) {
+                System.out.println(produto);
+            }
+        }
     }
 
     public void buscarProdutos(){
         System.out.print("Digite o ID do produto: ");
         int id = entradaNumero.nextInt();
 
-        produtoRepositorio.buscarProduto(id);
+        Produto produtoEncontrado = produtoRepositorio.buscarProduto(id);
+
+        if(produtoEncontrado != null){
+            System.out.println(produtoEncontrado);
+        } else {
+            System.out.println("--Produto não encontrado ou registrado");
+        }
     }
 
     //-----------Pedidos-----------
@@ -191,24 +287,92 @@ public class PedidosUi {
     public void criarPedido(){
         System.out.print("CPF do cliente: ");
         String cpf = entradaTexto.nextLine();
-        Cliente cliente = clienteRepositorio.buscarCliente(cpf);
+        Cliente clienteEncontrado = clienteRepositorio.buscarCliente(cpf);
 
         System.out.print("ID do produto: ");
         int id = entradaNumero.nextInt();
-        Produto produto = produtoRepositorio.buscarProduto(id);
+        Produto produtoEncontrado = produtoRepositorio.buscarProduto(id);
 
-        pedidoRepositorio.criarPedido(cliente, produto);
+        if(clienteEncontrado == null || produtoEncontrado == null){
+            System.out.println("--Não foi possivel criar o pedido. Por favor, verifique as informações inseridas");
+        } else {
+            pedidoRepositorio.criarPedido(clienteEncontrado, produtoEncontrado);
+            System.out.println("--Pedido criado com sucesso!");
+        }
     }
 
     public void listarPedidos(){
-        System.out.println("Lista de pedidos: ");
-        pedidoRepositorio.listarPedidos();
+        ArrayList<Pedido> pedidos = pedidoRepositorio.listarPedidos();
+
+        if(pedidos.isEmpty()){
+            System.out.println("--Nenhum pedido registrado.");
+        } else {
+            for(Pedido pedido : pedidos){
+                System.out.println(pedido);
+            }
+        }
     }
 
     public void buscarPedido(){
         System.out.print("ID do pedido: ");
         int id = entradaNumero.nextInt();
-        pedidoRepositorio.buscarPedido(id);
+        Pedido pedidoEncontrado = pedidoRepositorio.buscarPedido(id);
+
+        if(pedidoEncontrado == null){
+            System.out.println("--Pedido não encontrado ou registrado");
+        } else {
+            System.out.println(pedidoEncontrado);
+        }
     }
 
+    public void atualizarStatus(){
+        System.out.print("ID do pedido: ");
+        int id = entradaNumero.nextInt();
+        Pedido pedidoEncontrado = pedidoRepositorio.buscarPedido(id);
+
+       if(pedidoEncontrado != null) {
+           int opcaoStatus;
+           do {
+               menuAtualizarStatus();
+               opcaoStatus = entradaNumero.nextInt();
+               switch (opcaoStatus) {
+                   case 1:
+                       boolean sucessoPagar = pedidoEncontrado.pagar();
+
+                       if(sucessoPagar){
+                           System.out.println("--Pedido pago com sucesso!");
+                       } else {
+                           System.out.println("--Não foi possível pagar o pedido.");
+                       }
+                       break;
+
+                   case 2:
+                       boolean sucessoEnviar = pedidoEncontrado.enviar();
+
+                       if(sucessoEnviar){
+                           System.out.println("--Pedido enviado com sucesso!");
+                       } else {
+                           System.out.println("--Não foi possível enviar o pedido.");
+                       }
+                       break;
+
+                   case 3:
+                       boolean sucessoCancelar = pedidoEncontrado.cancelar();
+
+                       if(sucessoCancelar){
+                           System.out.println("--Pedido cancelado com sucesso!");
+                       } else {
+                           System.out.println("--Não foi possível cancelar o pedido.");
+                       }
+                       break;
+
+                   case 0:
+                       System.out.println("--Voltando...");
+                       break;
+               }
+           } while (opcaoStatus != 0) ;
+       } else {
+           System.out.println("--Pedido não encontrado ou registrado");
+       }
+    }
 }

@@ -16,4 +16,9 @@ public class Cliente {
     public String getNome() {
         return nome;
     }
+
+    @Override
+    public String toString() {
+        return String.format("Nome: %s | Cpf: %s ", nome, cpf);
+    }
 }

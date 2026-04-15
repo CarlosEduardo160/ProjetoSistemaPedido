@@ -2,11 +2,10 @@ package Model;
 
 public class Produto {
     private String nome;
-    private double preco;
+    private float preco;
     private int id;
 
-    public Produto(int id, String nome, double preco){
-        this.id = id;
+    public Produto(String nome, float preco){
         this.nome = nome;
         this.preco = preco;
     }
@@ -19,7 +18,16 @@ public class Produto {
         return preco;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("ID: %d | %s | R$:%.2f ", id, nome, preco);
     }
 }

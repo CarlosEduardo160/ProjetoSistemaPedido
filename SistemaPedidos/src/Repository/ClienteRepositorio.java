@@ -11,20 +11,13 @@ public class ClienteRepositorio {
         clientes.add(cliente);
     }
 
-    public void listarClientes() {
-        if (clientes.isEmpty()) {
-            System.out.println("-> Nenhum cliente cadastrado.");
-        } else {
-            for(Cliente cliente : clientes){
-                System.out.println("Nome: " + cliente.getNome() + "| Cpf: " + cliente.getCpf());
-            }
-        }
+    public ArrayList<Cliente> listarClientes() {
+        return clientes;
     }
-
 
     public Cliente buscarCliente(String cpf) {
         for(Cliente cliente : clientes){
-            if(cliente.getCpf().equals(cpf));{
+            if(cliente.getCpf().equals(cpf)){
                 return cliente;
             }
         }
